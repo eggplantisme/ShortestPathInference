@@ -5,6 +5,7 @@ from tqdm import tqdm
 import re
 from scipy.sparse import csr_matrix, lil_array
 import os
+# import mercator
 
 
 class rhg:
@@ -58,6 +59,24 @@ class rhg:
         if remove_output_file:
             os.remove(ouput_path)
         return rtheta_coords
+    
+    @staticmethod
+    def mercator_embedding(network_path, output_path, remove_output_file=False):
+        mercator.embed(network_path, output_name=output_path)
+        r_theta_coords = dict()
+        with open(output_path+".inf_coord", 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                if line.startswith("#"):
+                    continue
+                line = line.strip().split()
+                i = int(line[0])
+                r = float(line[3])
+                theta = float(line[2])
+                r_theta_coords[i] = (r, theta)
+        if remove_output_file:
+            os.remove(output_path+".inf_coord")
+        return r_theta_coords
 
     @staticmethod
     def distance(rtheta0, rtheta1):

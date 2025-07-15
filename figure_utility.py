@@ -71,6 +71,8 @@ def hyperbolic_graph_visulize(G, r_theta_coords, shortest_path=None, base_node_s
             r = np.arctanh(np.sqrt(KL_x**2+KL_y**2))
             theta = np.arctan2(KL_y, KL_x)  # extend arctan to -pi~pi
             if t == 0:
+                print(KL_src_rtheta)
+                print(KL_x, KL_y)
                 print(r, theta)
             geodesic_x.append(r*np.cos(theta))
             geodesic_y.append(r*np.sin(theta))
